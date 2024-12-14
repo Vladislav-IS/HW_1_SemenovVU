@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ДЗ 1</string>
+    <string name="mean_text">Среднее</string>
+    <string name="variance_text">Дисперсия</string>
+    <string name="get_number">Получить число</string>
+    <string name="err_empty">Ошибка! Среднее или дисперсия не заполнены!</string>
+    <string name="err_inf">Ошибка! Попробуйте уменьшить среднее или дисперсию!</string>
+    <string name="num_placeholder">Результат</string>
+</resources>

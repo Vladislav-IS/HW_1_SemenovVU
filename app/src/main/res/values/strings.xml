@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">HW 1</string>
+    <string name="mean_text">Mean value</string>
+    <string name="variance_text">Variance</string>
+    <string name="get_number">Get number</string>
+    <string name="err_empty">Error! Mean or variance is empty!</string>
+    <string name="err_inf">Error! Try to reduce mean or variance!</string>
+    <string name="num_placeholder">Result</string>
+</resources>
