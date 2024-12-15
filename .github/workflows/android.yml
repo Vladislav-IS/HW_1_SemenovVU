@@ -17,9 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
-      - name: detekt
-      - uses: natiginfo/action-detekt-all@.1.23.7
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: detekt all
+        uses: natiginfo/action-detekt-all@.1.23.7
 
   test:
     name: Run Unit Tests
