@@ -51,7 +51,7 @@ class MainFragment: Fragment() {
         viewModel.numForTextView.observe(viewLifecycleOwner, Observer { updatedNum ->
             when (updatedNum) {
                 ERR_EMPTY -> Toast.makeText(activity, R.string.err_empty, Toast.LENGTH_SHORT).show()
-                ERR_INF -> Toast.makeText(activity, R.string.err_empty, Toast.LENGTH_SHORT).show()
+                ERR_INF -> Toast.makeText(activity, R.string.err_inf, Toast.LENGTH_SHORT).show()
                 else -> binding.randomNumberResult.text = updatedNum.toString()
             }
         })
