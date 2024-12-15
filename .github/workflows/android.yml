@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "develop" ]
 
 jobs:
   validation:
@@ -14,12 +14,13 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
 
   detekt:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
-      - name: detekt
-      - uses: natiginfo/action-detekt-all@.1.23.7
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: detekt all
+        uses: natiginfo/action-detekt-all@1.23.7
 
   test:
     name: Run Unit Tests
