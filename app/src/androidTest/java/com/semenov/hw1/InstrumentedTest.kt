@@ -166,22 +166,22 @@ internal class InstrumentedTest {
      * checks mean and std^2 for the whole sample
      * mean and variance
      */
-    //private fun checkLogNorm(a: ArrayList<Double>, m: Double, v: Double, sk: Double, kur: Double) {
-    //    val d = a.toDoubleArray()
-    //    val gm = StatUtils.mean(d)
-    //    val gv = StatUtils.variance(d)
-    //    val gskewness = DescriptiveStatistics(d).skewness
-    //    val gkurtosis = DescriptiveStatistics(d).kurtosis
-    //    Log.d(
-    //        "DistributionTest",
-    //        "${abs(gm - m)} ${abs(gv - v)} " +
-    //                "${abs(gskewness - sk)} ${abs(gkurtosis - kur)}"
-    //    )
-    //    assertEquals("Mean is different", gm, m, meanDelta)
-    //    assertEquals("Variance is different", gv, v, varianceDelta)
-    //    assertEquals("Skewness is different", gskewness, sk, skewnessDelta)
-    //    assertEquals("Kurtosis is different", gkurtosis, kur, kurtosisDelta)
-    //}
+    private fun checkLogNorm(a: ArrayList<Double>, m: Double, v: Double, sk: Double, kur: Double) {
+        val d = a.toDoubleArray()
+        val gm = StatUtils.mean(d)
+        val gv = StatUtils.variance(d)
+        val gskewness = DescriptiveStatistics(d).skewness
+        val gkurtosis = DescriptiveStatistics(d).kurtosis
+        Log.d(
+            "DistributionTest",
+            "${abs(gm - m)} ${abs(gv - v)} " +
+                    "${abs(gskewness - sk)} ${abs(gkurtosis - kur)}"
+        )
+        assertEquals("Mean is different", gm, m, meanDelta)
+        assertEquals("Variance is different", gv, v, varianceDelta)
+        assertEquals("Skewness is different", gskewness, sk, skewnessDelta)
+        assertEquals("Kurtosis is different", gkurtosis, kur, kurtosisDelta)
+    }
 
     /**
      * использую тест Колмогорова-Смирнова для
