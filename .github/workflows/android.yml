@@ -14,7 +14,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
 
   detekt:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v3
