@@ -8,7 +8,11 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.*
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.IdlingPolicies
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.FailureHandler
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.base.DefaultFailureHandler
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -17,12 +21,12 @@ import io.github.kakaocup.kakao.edit.KEditText
 import io.github.kakaocup.kakao.screen.Screen
 import io.github.kakaocup.kakao.text.KButton
 import io.github.kakaocup.kakao.text.KTextView
-import java.util.*
+import java.util.Random
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlin.math.abs
-import kotlin.math.exp
 import kotlin.math.sqrt
 import kotlin.math.ln
 import org.apache.commons.math3.stat.inference.TestUtils
@@ -30,7 +34,11 @@ import org.apache.commons.math3.distribution.NormalDistribution
 import org.apache.commons.math3.stat.StatUtils
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics
 import org.hamcrest.Matcher
-import org.junit.*
+import org.junit.FixMethodOrder
+import org.junit.Before
+import org.junit.Test
+import org.junit.Assert
+import org.junit.BeforeClass
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 
@@ -158,23 +166,28 @@ internal class InstrumentedTest {
      * checks mean and std^2 for the whole sample
      * mean and variance
      */
-    private fun checkLogNorm(a: ArrayList<Double>, m: Double, v: Double, sk: Double, kur: Double) {
-        val d = a.toDoubleArray()
-        val gm = StatUtils.mean(d)
-        val gv = StatUtils.variance(d)
-        val gskewness = DescriptiveStatistics(d).skewness
-        val gkurtosis = DescriptiveStatistics(d).kurtosis
-        Log.d(
-            "DistributionTest",
-            "${abs(gm - m)} ${abs(gv - v)} " +
-                    "${abs(gskewness - sk)} ${abs(gkurtosis - kur)}"
-        )
-        assertEquals("Mean is different", gm, m, meanDelta)
-        assertEquals("Variance is different", gv, v, varianceDelta)
-        assertEquals("Skewness is different", gskewness, sk, skewnessDelta)
-        assertEquals("Kurtosis is different", gkurtosis, kur, kurtosisDelta)
-    }
+    //private fun checkLogNorm(a: ArrayList<Double>, m: Double, v: Double, sk: Double, kur: Double) {
+    //    val d = a.toDoubleArray()
+    //    val gm = StatUtils.mean(d)
+    //    val gv = StatUtils.variance(d)
+    //    val gskewness = DescriptiveStatistics(d).skewness
+    //    val gkurtosis = DescriptiveStatistics(d).kurtosis
+    //    Log.d(
+    //        "DistributionTest",
+    //        "${abs(gm - m)} ${abs(gv - v)} " +
+    //                "${abs(gskewness - sk)} ${abs(gkurtosis - kur)}"
+    //    )
+    //    assertEquals("Mean is different", gm, m, meanDelta)
+    //    assertEquals("Variance is different", gv, v, varianceDelta)
+    //    assertEquals("Skewness is different", gskewness, sk, skewnessDelta)
+    //    assertEquals("Kurtosis is different", gkurtosis, kur, kurtosisDelta)
+    //}
 
+    /**
+     * использую тест Колмогорова-Смирнова для
+     * проверки нормаьности распределения логарифмов
+     * сгенерированных чисел
+     */
     private fun ksTest(a: ArrayList<Double>) {
         val d = a.toDoubleArray()
         val normDist = NormalDistribution(mean, sqrt(variance))
