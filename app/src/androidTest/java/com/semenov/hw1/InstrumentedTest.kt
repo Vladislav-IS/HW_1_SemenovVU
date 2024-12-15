@@ -132,12 +132,14 @@ internal class InstrumentedTest {
             varianceView.clearText()
             meanView.typeText("$mean")
             varianceView.typeText("$variance")
-            for (i in 0..limit) {
+            var i = 0
+            while (i <= limit) {
                 getNum.click()
                 Thread.sleep(THREAD_DELAY)
                 resultNum.assert {
-                    DoubleComparison(mean, variance, this@InstrumentedTest)
+                    DoubleComparison(mean, this@InstrumentedTest)
                 }
+                i++
             }
             // check saving state after rotation
             handler?.extraMessage = "Rotating device"
@@ -147,40 +149,11 @@ internal class InstrumentedTest {
             resultNum.hasText("$lastNumber")
 
             ksTest(generatedNums)
-
-            //checkLogNorm(
-            //    generatedNums,
-            //    exp(mean + variance / 2.0),
-            //    exp(2 * mean + variance) * (exp(variance) - 1),
-            //    sqrt(exp(variance) - 1) * (exp(variance) + 2),
-            //    exp(4 * variance) + 2 * exp(3 * variance) + 3 * exp(2 * variance) - 6
-            //)
         }
     }
 
     fun addGeneratedNumber(e: Double) {
         generatedNums.add(ln(e))
-    }
-
-    /**
-     * checks mean and std^2 for the whole sample
-     * mean and variance
-     */
-    private fun checkLogNorm(a: ArrayList<Double>, m: Double, v: Double, sk: Double, kur: Double) {
-        val d = a.toDoubleArray()
-        val gm = StatUtils.mean(d)
-        val gv = StatUtils.variance(d)
-        val gskewness = DescriptiveStatistics(d).skewness
-        val gkurtosis = DescriptiveStatistics(d).kurtosis
-        Log.d(
-            "DistributionTest",
-            "${abs(gm - m)} ${abs(gv - v)} " +
-                    "${abs(gskewness - sk)} ${abs(gkurtosis - kur)}"
-        )
-        assertEquals("Mean is different", gm, m, meanDelta)
-        assertEquals("Variance is different", gv, v, varianceDelta)
-        assertEquals("Skewness is different", gskewness, sk, skewnessDelta)
-        assertEquals("Kurtosis is different", gkurtosis, kur, kurtosisDelta)
     }
 
     /**
@@ -229,7 +202,6 @@ internal class InstrumentedTest {
 
 internal class DoubleComparison(
     private val mean: Double,
-    private val std: Double,
     private val testInstance: InstrumentedTest
 ) :
     ViewAssertion {
