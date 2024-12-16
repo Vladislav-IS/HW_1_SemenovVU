@@ -56,11 +56,6 @@ internal class InstrumentedTest {
     private var mean = 0.0
     private var variance = 1.0
 
-    private val meanDelta = 1e-1
-    private val varianceDelta = 0.8
-    private val skewnessDelta = 1.1
-    private val kurtosisDelta = 3.1
-
     private var generatedNums = ArrayList<Double>(0)
 
     private var activityScenario: ActivityScenario<MainActivity>? = null
